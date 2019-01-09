@@ -2,13 +2,13 @@
 
 int main()
 {
-	int base = 20;
-	int height = 16;
-	int area;
+	int base = 21;
+	int height = 13;
+	float area;
 
-	area = base * height / 2;
-
-	printf("%d\n", area);
+	area = (float)base * height / 2;
+	
+	printf("%f\n", area);
 
 	return 0;
 }
