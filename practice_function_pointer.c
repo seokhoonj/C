@@ -1,28 +1,35 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
 
-void hello()
+int add(int a, int b)
 {
-	printf("Hello, ");
+	return a + b;
 }
 
-void numberToString(int n, char *buffer)
+int sub(int a, int b)
 {
-	sprintf(buffer, "%d", n);
+	return a - b;
+}
+
+struct Calc {
+	int (*fp[2])(int, int); 
+};
+
+int executer(int (*fp)(int, int), int a, int b)
+{
+	return fp(a, b);
+}
+
+int (*getFunc(struct Calc *c, int index))(int, int)
+{
+	return c->fp[index];
 }
 
 int main(void)
 {
-	void (*fp1)();
-	void (*fp2)(int, char *);
-	char buffer[20];
+	struct Calc c = { { add, sub } };
 
-	fp1 = hello;
-	fp2 = numberToString;
-
-	fp1();
-	fp2(100, buffer);
-	printf("%s\n", buffer);
+	printf("%d\n", executer(getFunc(&c, 0), 10, 20));
+	printf("%d\n", executer(getFunc(&c, 1), 10, 20));
 
 	return 0;
 }
